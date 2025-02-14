@@ -49,20 +49,6 @@ class PresentationDisplaysPlugin : FlutterPlugin, ActivityAware, MethodChannel.M
     private const val viewTypeId = "presentation_displays_plugin"
     private const val viewTypeEventsId = "presentation_displays_plugin_events"
     private var displayManager: DisplayManager? = null
-
-    /** @hide */
-    @Suppress("unused", "DEPRECATION")
-    @JvmStatic
-    fun registerWith(registrar: PluginRegistry.Registrar) {
-      val channel = MethodChannel(registrar.messenger(), viewTypeId)
-      channel.setMethodCallHandler(PresentationDisplaysPlugin())
-
-      val eventChannel = EventChannel(registrar.messenger(), viewTypeEventsId)
-      displayManager =
-          registrar.activity()!!.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
-      val displayConnectedStreamHandler = DisplayConnectedStreamHandler(displayManager)
-      eventChannel.setStreamHandler(displayConnectedStreamHandler)
-    }
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
